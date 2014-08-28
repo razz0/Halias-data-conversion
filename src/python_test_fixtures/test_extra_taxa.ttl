@@ -1,0 +1,42 @@
+@prefix taxmeon:  <http://www.yso.fi/onto/taxmeon/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix halias-taxa:     <http://www.yso.fi/onto/bio/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix halias-schema:      <http://ldf.fi/schema/halias/> .
+@prefix taxonomic-ranks:  <http://www.yso.fi/onto/taxonomic-ranks/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix bio:     <http://www.yso.fi/onto/bio/> .
+
+
+halias-taxa:FMNH_371773
+      rdf:type owl:Class , taxmeon:TaxonInChecklist , taxonomic-ranks:Species ;
+      rdfs:label "Ardea alba" ;
+      halias-schema:scientificName "Ardea alba" ;
+      rdfs:subClassOf halias-taxa:FMNH_371762 ;
+      halias-schema:abbreviation "Egralb" ;
+      taxmeon:hasVernacularName halias-taxa:FMNH_vernacular_350446 , halias-taxa:FMNH_vernacular_350447 ;
+      taxmeon:isPartOfHigherTaxon halias-taxa:FMNH_371762 .
+
+halias-taxa:FMNH_vernacular_350446
+      rdf:type taxmeon:VernacularName ;
+      rdfs:label "jalohaikara"@fi ;
+      taxmeon:inverse_of_hasVernacularName
+              halias-taxa:FMNH_371773 ;
+      taxmeon:vernacularName
+              "jalohaikara" .
+
+halias-taxa:FMNH_vernacular_350447
+      rdf:type taxmeon:VernacularName ;
+      rdfs:label "great egret"@en ;
+      taxmeon:inverse_of_hasVernacularName
+              halias-taxa:FMNH_371773 ;
+      taxmeon:vernacularName
+              "Great Egret" .
+
+halias-taxa:bomstu
+      rdf:type owl:Class , taxmeon:TaxonInChecklist ;
+      rdfs:label "tilhi / kottarainen"@fi ,
+		"bohemian waxwing / starling"@en ;
+      halias-schema:abbreviation "bomstu" , "bom/st" ;
+      rdfs:subClassOf halias-taxa:FMNH_375779 .

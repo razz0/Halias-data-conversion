@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:halias-schema="http://ldf.fi/schema/halias/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:qb="http://purl.org/linked-data/cube#"
+  xmlns:halias-taxa="http://ldf.fi/halias/taxa/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <qb:Observation rdf:about="http://ldf.fi/halias/observations/H19790501tritot">
+    <qb:dataSet rdf:resource="http://ldf.fi/halias/observations/haliasDataSet"/>
+    <halias-schema:countLocal>19</halias-schema:countLocal>
+    <halias-schema:refTime rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1979-05-01</halias-schema:refTime>
+    <halias-schema:season rdf:resource="http://ldf.fi/schema/halias/spring"/>
+    <rdfs:label>tringa totanus, 1979-05-01</rdfs:label>
+    <rdfs:comment>dummy data</rdfs:comment>
+    <halias-schema:countMigration>2</halias-schema:countMigration>
+    <halias-schema:rarity rdf:resource="http://ldf.fi/schema/halias/common"/>
+    <rdf:type rdf:resource="http://ldf.fi/halias/taxa/FMNH_372765"/>
+    <halias-schema:observedSpecies rdf:resource="http://www.yso.fi/onto/bio/FMNH_372765"/>
+  </qb:Observation>
+
+  <qb:Observation rdf:about="http://ldf.fi/halias/observations/H19790502scorus">
+    <halias-schema:rarity rdf:resource="http://ldf.fi/schema/halias/common"/>
+    <halias-schema:countLocal>0</halias-schema:countLocal>
+    <halias-schema:observedSpecies rdf:resource="http://www.yso.fi/onto/bio/FMNH_372711"/>
+    <halias-schema:countMigration>6</halias-schema:countMigration>
+    <qb:dataSet rdf:resource="http://ldf.fi/halias/observations/haliasDataSet"/>
+    <halias-schema:season rdf:resource="http://ldf.fi/schema/halias/spring"/>
+    <halias-schema:refTime rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1979-05-02</halias-schema:refTime>
+    <rdfs:label>scolopax rusticola, 1979-05-02</rdfs:label>
+    <rdfs:comment>dummy data</rdfs:comment>
+    <rdf:type rdf:resource="http://www.yso.fi/onto/bio/FMNH_372711"/>
+  </qb:Observation>
+
+  <halias-taxa:FMNH_372637 rdf:about="http://ldf.fi/halias/observations/H19790502chahia">
+    <halias-schema:refTime rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1979-05-02</halias-schema:refTime>
+    <halias-schema:countLocal>7</halias-schema:countLocal>
+    <rdfs:label>charadrius hiaticula, 1979-05-02</rdfs:label>
+    <rdfs:comment>dummy data</rdfs:comment>
+    <rdf:type rdf:resource="http://purl.org/linked-data/cube#Observation"/>
+    <halias-schema:season rdf:resource="http://ldf.fi/schema/halias/spring"/>
+    <halias-schema:observedSpecies rdf:resource="http://www.yso.fi/onto/bio/FMNH_372637"/>
+    <qb:dataSet rdf:resource="http://ldf.fi/halias/observations/haliasDataSet"/>
+    <halias-schema:countMigration>3</halias-schema:countMigration>
+    <halias-schema:rarity rdf:resource="http://ldf.fi/schema/halias/common"/>
+  </halias-taxa:FMNH_372637>
+
+  <halias-taxa:FMNH_371381 rdf:about="http://ldf.fi/halias/observations/H19790503sommol">
+    <halias-schema:countMigration>13</halias-schema:countMigration>
+    <rdf:type rdf:resource="http://purl.org/linked-data/cube#Observation"/>
+    <halias-schema:countLocal>666</halias-schema:countLocal>
+    <halias-schema:observedSpecies rdf:resource="http://www.yso.fi/onto/bio/FMNH_371381"/>
+    <halias-schema:refTime rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1979-05-03</halias-schema:refTime>
+    <rdfs:label>somateria mollissima, 1979-05-03</rdfs:label>
+    <rdfs:comment>dummy data</rdfs:comment>
+    <halias-schema:rarity rdf:resource="http://ldf.fi/schema/halias/common"/>
+    <qb:dataSet rdf:resource="http://ldf.fi/halias/observations/haliasDataSet"/>
+    <halias-schema:season rdf:resource="http://ldf.fi/schema/halias/spring"/>
+  </halias-taxa:FMNH_371381>
+
+  <halias-taxa:FMNH_371246 rdf:about="http://ldf.fi/halias/observations/H19790504cygolo">
+    <halias-schema:rarity rdf:resource="http://ldf.fi/schema/halias/common"/>
+    <rdfs:label>cygnus olor, 1979-05-04</rdfs:label>
+    <rdfs:comment>dummy data</rdfs:comment>
+    <qb:dataSet rdf:resource="http://ldf.fi/halias/observations/haliasDataSet"/>
+    <halias-schema:countMigration>5</halias-schema:countMigration>
+    <halias-schema:season rdf:resource="http://ldf.fi/schema/halias/spring"/>
+    <rdf:type rdf:resource="http://purl.org/linked-data/cube#Observation"/>
+    <halias-schema:refTime rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1979-05-04</halias-schema:refTime>
+    <halias-schema:observedSpecies rdf:resource="http://www.yso.fi/onto/bio/FMNH_371246"/>
+    <halias-schema:countLocal>0</halias-schema:countLocal>
+  </halias-taxa:FMNH_371246>
+
+</rdf:RDF>

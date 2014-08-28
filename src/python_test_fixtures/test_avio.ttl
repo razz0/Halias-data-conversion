@@ -1,0 +1,92 @@
+@prefix dc:      <http://purl.org/dc/elements/1.1/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bio-meta:  <http://www.yso.fi/onto/bio-meta/> .
+@prefix bio:     <http://www.yso.fi/onto/bio/> .
+@prefix taxonomic-ranks:  <http://www.yso.fi/onto/taxonomic-ranks/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix taxmeon:  <http://www.yso.fi/onto/taxmeon/> .
+
+
+bio:FMNH_vernacular_350447
+      a       taxmeon:VernacularName ;
+      rdfs:label "great egret"@en ;
+      taxmeon:inverse_of_hasVernacularName
+              bio:FMNH_371773 ;
+      taxmeon:vernacularName
+              "great egret" .
+
+bio:FMNH_vernacular_350446
+      a       taxmeon:VernacularName ;
+      rdfs:label "jalohaikara"@fi ;
+      taxmeon:inverse_of_hasVernacularName
+              bio:FMNH_371773 ;
+      taxmeon:vernacularName
+              "jalohaikara" .
+
+bio:FMNH_371773
+      a       taxmeon:TaxonInChecklist , taxonomic-ranks:Species ;
+      rdfs:label "alba" ;
+      taxmeon:completeTaxonName
+              "Ardea alba" ;
+      taxmeon:hasNameStatus
+              bio:FMNH_status_371773 ;
+      taxmeon:hasStatuslessVernacularName
+              bio:FMNH_vernacular_350446 , bio:FMNH_vernacular_350447 ;
+      taxmeon:hasVernacularName
+              bio:FMNH_vernacular_350446 , bio:FMNH_vernacular_350447 ;
+      taxmeon:humanPrefLabel
+              "Ardea alba  published in Maailman lintujen suomenkieliset nimet (Finnish Names of the Birds of the World)"^^xsd:string ;
+      taxmeon:isPartOfHigherTaxon
+              bio:FMNH_371762 ;
+      taxmeon:occursInChecklist
+              bio:FMNH_Reference_168 ;
+      taxmeon:orderingWeight
+              "1037"^^xsd:double ;
+      taxmeon:refersToTaxon
+              bio:Aves_Ardea_alba .
+
+bio:FMNH_371762
+      a       taxonomic-ranks:Genus , taxmeon:TaxonInChecklist ;
+      rdfs:label "Ardea"^^xsd:string ;
+      taxmeon:hasNameStatus
+              bio:FMNH_status_371762 ;
+      taxmeon:hasStatuslessVernacularName
+              bio:FMNH_vernacular_350425 ;
+      taxmeon:hasVernacularName
+              bio:FMNH_vernacular_350425 ;
+      taxmeon:humanPrefLabel
+              "Ardea  published in Maailman lintujen suomenkieliset nimet (Finnish Names of the Birds of the World)"^^xsd:string ;
+      taxmeon:isPartOfHigherTaxon
+              bio:FMNH_371708 ;
+      taxmeon:occursInChecklist
+              bio:FMNH_Reference_168 ;
+      taxmeon:orderingWeight
+              "1026"^^xsd:double ;
+      taxmeon:refersToTaxon
+              bio:Aves_Ardea .
+
+bio:FMNH_371321
+      a       taxmeon:TaxonInChecklist , taxonomic-ranks:Species ;
+      rdfs:label "platyrhynchos" ;
+      taxmeon:completeTaxonName
+              "Anas platyrhynchos" ;
+      taxmeon:hasNameStatus
+              bio:FMNH_status_371321 ;
+      taxmeon:hasStatuslessVernacularName
+              bio:FMNH_vernacular_349675 , bio:FMNH_vernacular_349674 ;
+      taxmeon:hasVernacularName
+              bio:FMNH_vernacular_349675 , bio:FMNH_vernacular_349674 ;
+      taxmeon:humanPrefLabel
+              "Anas platyrhynchos  published in Maailman lintujen suomenkieliset nimet (Finnish Names of the Birds of the World)"^^xsd:string ;
+      taxmeon:isPartOfHigherTaxon
+              bio:FMNH_371312 ;
+      taxmeon:occursInChecklist
+              bio:FMNH_Reference_168 ;
+      taxmeon:orderingWeight
+              "585"^^xsd:double ;
+      taxmeon:refersToTaxon
+              bio:Aves_Anas_platyrhynchos .
+
+

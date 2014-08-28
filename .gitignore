@@ -1,4 +1,10 @@
 *.class
+*.xml
+*.iml
+doc/
+bin/
+src/com/luckycatlabs/
+jena-log4j.properties
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
