@@ -218,6 +218,11 @@ for row in csvReader:
         day = date[ 1 ]
         year = date[ 2 ]
 
+        if int(year) > 2008:
+            # Skip these (year 2009) as we have standardized migration counts only up to 2008.
+            # Otherwise the different scopes would have to be accounted for in result normalization for visualizations.
+            continue
+
         if len(month) == 1:
             month = "0" + month
         if len(day) == 1:

@@ -523,7 +523,7 @@ public class HaliasDataProcessor {
                     observationOntology.add(r, observationOntology.createProperty(NS_SDMX_A, "nonsamplingErr"), observationOntology.createLiteral(v_error));
                 }
 		    	observationOntology.add(r, observationOntology.createProperty(NS_HALIAS_SCHEMA, "countStandardizedMigration"), observationOntology.createTypedLiteral( vakio ));
-		    } else {
+            } else {
                 observationOntology.add(r, observationOntology.createProperty(NS_HALIAS_SCHEMA, "countStandardizedMigration"), observationOntology.createTypedLiteral( new Integer( 0 )));
             }
 		    
@@ -686,7 +686,7 @@ public class HaliasDataProcessor {
 
             // ADD WEATHER DATA FOR STANDARD OBSERVATION TIME
 
-            MorningWeather morningAverages = weather.calculateMorningWeather(dayLen.sunriseH, dayLen.sunriseMin);
+            MorningWeather morningAverages = weather.calculateMorningWeather(dayLen.sunriseH, dayLen.sunriseMin, month);
 
             Property p;
             RDFNode o;
@@ -898,7 +898,7 @@ public class HaliasDataProcessor {
 				hc.observationOntology.setNsPrefix("winds", NS_WINDS);
                 hc.observationOntology.setNsPrefix("bio", NS_BIO);
                 hc.observationOntology.setNsPrefix("rdfs", RDFS.getURI());
-                hc.observationOntology.setNsPrefix("sdmx-a", "http://purl.org/linked-data/sdmx/2009/attribute");
+                hc.observationOntology.setNsPrefix("sdmx-a", NS_SDMX_A);
 
 				System.out.println( "------ add labels" );
 				hc.addLabelsToObservations();

@@ -122,28 +122,35 @@ public class DailyWeather {
 	}
 
 	/**
-	 * 	 *	Calculate average of morning observations by integrating over minutes of the 4 hour period. 
+	 * 	 *	Calculate average of morning observations by integrating over minutes of the 4 (or 2) hour period.
 	 *	Values between measurement points are expected to follow linear interpolation of closest known measurements.
 	 * 	
 	 * @param	measurements	Reindexed weather observations, starting from the first eligible observation.
 	 * @param	minutes0		Minutes offset from first measurement (0-179).
-	 * 
+	 * @param	length		    Length of time to integrate over (120 or 240).
+	 *
 	 * @return	average of values according to minutes offset from first measurement.
 	 */
-	public Double _calculateMeasurementAverage( Double[] measurements, Integer minutes0 )
-	{
-		Double tempIntegral = 0.0;
-		Double tempStart, tempEnd;
-		
-		// Integrate backwards from index0+1 because index0 may not be in our scope.
-		tempEnd = measurements[1];
-		tempStart = tempEnd + ( measurements[0] - tempEnd ) / 180.0 * (180-minutes0);
-		
-		tempIntegral += ((tempStart + tempEnd) / 2) * (180-minutes0);
-		
-		if ( minutes0 > 120 ) 
+	public Double _calculateMeasurementAverage( Double[] measurements, Integer minutes0, Integer length ) {
+        Double tempIntegral = 0.0;
+        Double tempStart, tempEnd;
+
+        // Integrate from index0 onward.
+
+        tempStart = measurements[0] + (measurements[1] - measurements[0]) / 180.0 * minutes0;
+//		tempStart = tempEnd + ( measurements[0] - tempEnd ) / 180.0 * (180 - minutes0);
+
+        if (minutes0 + length > 180) {
+            tempEnd = measurements[1];
+            tempIntegral += ((tempStart + tempEnd) / 2) * (180 - minutes0);
+        } else {
+            tempEnd = measurements[0] + (measurements[1] - measurements[0]) / 180 * (minutes0 + length);
+            tempIntegral += ((tempStart + tempEnd) / 2) * length;
+        }
+
+		if ( minutes0 + length > 2 * 180 )
 		{
-			// 2 weather observations in standardized observation time
+			// 2 weather observations in standardized observation time. Expecting length == 240 here.
 			Integer minutes1 = minutes0 - 120;
 
 			tempIntegral += ( measurements[1] + measurements[2] ) / 2 * 180;
@@ -154,15 +161,17 @@ public class DailyWeather {
 		}
 		else 
 		{
-			// 1 weather observation in standardized observation time
-			Integer minutes1 = minutes0 + 60;
-			
-			tempStart = measurements[1];
-			tempEnd = tempStart + (measurements[2] - tempStart ) / 180.0 * minutes1;
-			tempIntegral += ((tempStart + tempEnd) / 2) * minutes1;
+			// 0-1 weather observations in standardized observation time
+			Integer minutes1 = minutes0 + length - 180;
+
+			if (minutes1 > 0) {
+                tempStart = measurements[1];
+                tempEnd = tempStart + (measurements[2] - tempStart) / 180.0 * minutes1;
+                tempIntegral += ((tempStart + tempEnd) / 2) * minutes1;
+            }
 		}
 		
-		return tempIntegral / 240;
+		return tempIntegral / length;
 	}
 
 	
@@ -205,17 +214,24 @@ public class DailyWeather {
 	 * @param	startTimeHour		starting time hour, must be something from 3 to 11.
 	 * @param	startTimeMinute		starting time minutes (0-59).
 	 * 
-	 * @return	Averages of given 4 hour period of morning
+	 * @return	Averages of given 4 (or 2) hour period of morning
 	 */
-	public MorningWeather calculateMorningWeather( Integer startTimeHour, Integer startTimeMinute ) 
+	public MorningWeather calculateMorningWeather( Integer startTimeHour, Integer startTimeMinute, Integer month )
 	{
 		// Validate arguments
 		if ((startTimeHour < 0 || startTimeHour > 8) ||
 			(startTimeMinute < 0 || startTimeMinute > 59) ||
 			(startTimeHour == 8 && startTimeMinute != 0))
 			return null;
-		
-		MorningWeather averagedValues = new MorningWeather();
+
+        Integer length;
+        if (month == 11 || month == 12 || month == 1 || month == 2 || month == 3) {
+            length = 120;
+        } else {
+            length = 240;
+        }
+
+        MorningWeather averagedValues = new MorningWeather();
 		
 		Integer index0 = startTimeHour / 3;									// Starting observation index
 		Integer minutes0 = ( startTimeHour % 3 ) * 60 + startTimeMinute;	// Minutes from index0 to observation start
@@ -230,7 +246,7 @@ public class DailyWeather {
 
 		eligibleMeasurements = _checkAndReindexMeasurements(index0, minutes0, measurements);
 		if (eligibleMeasurements != null)
-			averagedValues.temperature = _calculateMeasurementAverage(eligibleMeasurements, minutes0);
+			averagedValues.temperature = _calculateMeasurementAverage(eligibleMeasurements, minutes0, length);
 		
 		// Pressure
 		for (Integer x = 0; x < this.weatherObservation.length; x++)
@@ -238,19 +254,17 @@ public class DailyWeather {
 		
 		eligibleMeasurements = _checkAndReindexMeasurements(index0, minutes0, measurements);
 		if (eligibleMeasurements != null)
-			averagedValues.pressure = _calculateMeasurementAverage(eligibleMeasurements, minutes0);
+			averagedValues.pressure = _calculateMeasurementAverage(eligibleMeasurements, minutes0, length);
 		
-		// Winds		
+		// Winds
 		if (minutes0 == 0 && this.weatherObservation[index0].wind != null) {
-			//System.out.println(this.weatherObservation[index0].wind.toString());
 			averagedValues.winds.add(this.weatherObservation[index0].wind);
 		}
-		if (this.weatherObservation[index0 + 1].wind != null)
-			//System.out.println(this.weatherObservation[index0 + 1].wind.toString());
+		if ((minutes0 + length) >= 180 && this.weatherObservation[index0 + 1].wind != null)
 			averagedValues.winds.add(this.weatherObservation[index0 + 1].wind);
 
-		if (minutes0 >= 120 && this.weatherObservation[index0 + 2].wind != null) {
-			//System.out.println(this.weatherObservation[index0 + 2].wind.toString());
+		if ((minutes0 + length) >= 2 * 180 && this.weatherObservation[index0 + 2].wind != null) {
+            // Take another wind if it fits the observation time slot
 			averagedValues.winds.add(this.weatherObservation[index0 + 2].wind);
 		}
 
@@ -263,7 +277,7 @@ public class DailyWeather {
 		}
 		eligibleMeasurements = _checkAndReindexMeasurements(index0, minutes0, measurements);
 		if (eligibleMeasurements != null)
-			averagedValues.cloudCover = _calculateMeasurementAverage(eligibleMeasurements, minutes0);
+			averagedValues.cloudCover = _calculateMeasurementAverage(eligibleMeasurements, minutes0, length);
 		
 		// Humidity
 		for (Integer x = 0; x < this.weatherObservation.length; x++) {
@@ -274,7 +288,7 @@ public class DailyWeather {
 		}
 		eligibleMeasurements = _checkAndReindexMeasurements(index0, minutes0, measurements);
 		if (eligibleMeasurements != null)
-			averagedValues.humidity = _calculateMeasurementAverage(eligibleMeasurements, minutes0);
+			averagedValues.humidity = _calculateMeasurementAverage(eligibleMeasurements, minutes0, length);
 		
 		return averagedValues;
 	}

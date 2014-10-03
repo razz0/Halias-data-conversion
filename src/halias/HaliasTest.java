@@ -100,14 +100,29 @@ public class HaliasTest {
 		Double[] measurements = {-180.0, 0.0, 180.0, 360.0 };  
 		
 		for (Integer minutes0 = 0; minutes0 < 180; minutes0++) {
-			Double average = daily._calculateMeasurementAverage(measurements, minutes0);
+			Double average = daily._calculateMeasurementAverage(measurements, minutes0, 240);
 			Integer expectedAverage = -60 + minutes0;
 			String message = "Got: " + Double.toString(average) + ", expecting: " + expectedAverage;
 			assertTrue(message, Math.abs(average - expectedAverage) < EPSILON);
 		}
 	}
 
-	@Test
+    @Test
+    public void testCalculateMeasurementAverage2() {
+
+        DailyWeather daily = new DailyWeather();
+
+        Double[] measurements = {-180.0, 0.0, 180.0, 360.0 };
+
+        for (Integer minutes0 = 0; minutes0 < 180; minutes0++) {
+            Double average = daily._calculateMeasurementAverage(measurements, minutes0, 120);
+            Integer expectedAverage = -120 + minutes0;
+            String message = "Got: " + Double.toString(average) + ", expecting: " + expectedAverage;
+            assertTrue(message, Math.abs(average - expectedAverage) < EPSILON);
+        }
+    }
+
+    @Test
 	public void testCalculateMorningWeatherAll() {
 		
 		DailyWeather daily = new DailyWeather();
@@ -117,7 +132,7 @@ public class HaliasTest {
 		daily.weatherObservation[3] = daily.new ConcurrentObservations(5.0, 1000.0, 7, 5, 80, "N");
 		daily.weatherObservation[4] = daily.new ConcurrentObservations(10.0, 1000.0, 7, 5, 80, "N");
 		
-		MorningWeather morning = daily.calculateMorningWeather(02, 00);
+		MorningWeather morning = daily.calculateMorningWeather(02, 00, 6);
 		
 		Double expectedTemperature = 0.125;
 		Double expectedPressure = 1000.0;
@@ -132,7 +147,20 @@ public class HaliasTest {
 		assertTrue(morning.winds.size() == 2);
 		assertTrue(morning.winds.get(0).speed == 7);
 		assertTrue(morning.winds.get(0).dir == "N");
-	}
+
+        // Winter month
+
+        morning = daily.calculateMorningWeather(02, 00, 2);
+
+        assertFalse(morning.temperature.toString(), Math.abs(morning.temperature - expectedTemperature) < EPSILON);
+        assertTrue(morning.pressure.toString(), Math.abs(morning.pressure - expectedPressure) < EPSILON);
+        assertTrue(morning.cloudCover.toString(), Math.abs(morning.cloudCover - expectedCloudCover) < EPSILON);
+        assertTrue(morning.humidity.toString(), Math.abs(morning.humidity - expectedHumidity) < EPSILON);
+
+        assertTrue(morning.winds.size() == 1);
+        assertTrue(morning.winds.get(0).speed == 7);
+        assertTrue(morning.winds.get(0).dir == "N");
+    }
 
 	@Test
 	public void testCalculateMorningWeatherTemp2() {
@@ -144,7 +172,7 @@ public class HaliasTest {
 		daily.weatherObservation[3] = daily.new ConcurrentObservations(0.0, 1000.0, 7, 5, 80, "NE");
 		daily.weatherObservation[4] = daily.new ConcurrentObservations();
 		
-		MorningWeather morning = daily.calculateMorningWeather(01, 59);
+		MorningWeather morning = daily.calculateMorningWeather(01, 59, 6);
 		
 		// This is an approximation
 		Double expectedAverage = 1.41625; // ((1 + 0.33 / 2) + 1.5 * 3) / 4;
@@ -162,7 +190,7 @@ public class HaliasTest {
 		daily.weatherObservation[3] = daily.new ConcurrentObservations(0.0, 1000.0, 7, 5, 80, "NE");
 		daily.weatherObservation[4] = daily.new ConcurrentObservations(90.0, 1000.0, 7, 5, 80, "NE");
 		
-		MorningWeather morning = daily.calculateMorningWeather(7, 10);
+		MorningWeather morning = daily.calculateMorningWeather(7, 10, 6);
 		
 		assertNotNull(morning);
 		assertNotNull(morning.temperature);
@@ -183,7 +211,7 @@ public class HaliasTest {
 		daily.weatherObservation[3] = daily.new ConcurrentObservations(0.0, 1000.0, 7, 5, 80, "NE");
 		daily.weatherObservation[4] = daily.new ConcurrentObservations(90.0, 1000.0, 7, 5, 80, "NE");
 		
-		MorningWeather morning = daily.calculateMorningWeather(5, 30);
+		MorningWeather morning = daily.calculateMorningWeather(5, 30, 6);
 		
 		assertNull(morning.temperature);
 	}
@@ -198,7 +226,7 @@ public class HaliasTest {
 		daily.weatherObservation[3] = daily.new ConcurrentObservations(0.0, 1000.0, 7, 5, 80, "NE");
 		daily.weatherObservation[4] = daily.new ConcurrentObservations(0.0, 1000.0, 7, 5, 80, "NE");
 		
-		MorningWeather morning = daily.calculateMorningWeather(1, 00);
+		MorningWeather morning = daily.calculateMorningWeather(1, 00, 6);
 		
 		// This is an approximation
 		Double expectedAverage = 933.3333333;
@@ -217,7 +245,7 @@ public class HaliasTest {
 		daily.weatherObservation[3] = daily.new ConcurrentObservations(5.0, 1000.0, 7, 5, 80, "SE");
 		daily.weatherObservation[4] = daily.new ConcurrentObservations(10.0, 1000.0, 7, 5, 80, "S");
 		
-		MorningWeather morning = daily.calculateMorningWeather(04, 59);
+		MorningWeather morning = daily.calculateMorningWeather(04, 59, 6);
 		
 		assertTrue(Integer.toString(morning.winds.size()), morning.winds.size() == 1);
 		assertTrue(morning.winds.get(0).speed == 7);
@@ -234,7 +262,7 @@ public class HaliasTest {
 		daily.weatherObservation[3] = daily.new ConcurrentObservations(5.0, 1000.0, 7, 5, 80, "NE");
 		daily.weatherObservation[4] = daily.new ConcurrentObservations(10.0, 1000.0, 9, 5, 80, "S");
 		
-		MorningWeather morning = daily.calculateMorningWeather(02, 00);
+		MorningWeather morning = daily.calculateMorningWeather(02, 00, 6);
 		
 		assertTrue(morning.winds.size() == 2);
 		assertTrue(morning.winds.contains(daily.weatherObservation[1].wind));
@@ -251,7 +279,7 @@ public class HaliasTest {
 		daily.weatherObservation[3] = daily.new ConcurrentObservations(5.0, 1000.0, 7, 1, 80, "SE");
 		daily.weatherObservation[4] = daily.new ConcurrentObservations(10.0, 1000.0, 7, 1, 80, "S");
 		
-		MorningWeather morning = daily.calculateMorningWeather(00, 30);
+		MorningWeather morning = daily.calculateMorningWeather(00, 30, 6);
 		
 		// This is an approximation
 		Double expectedAverage = 6.791666667;
@@ -270,7 +298,7 @@ public class HaliasTest {
 		daily.weatherObservation[3] = daily.new ConcurrentObservations(5.0, 1000.0, 7, 1, 10, "SE");
 		daily.weatherObservation[4] = daily.new ConcurrentObservations(10.0, 1000.0, 7, 1, 10, "S");
 		
-		MorningWeather morning = daily.calculateMorningWeather(02, 30);
+		MorningWeather morning = daily.calculateMorningWeather(02, 30, 6);
 		
 		// This is a ROUGH approximation
 		Double expectedAverage = 40.1;
@@ -357,6 +385,11 @@ public class HaliasTest {
 		expectedStandardTemperature.put("1979-05-02", "-18.0");
 		expectedStandardTemperature.put("1979-05-03", "-13.0");
 		expectedStandardTemperature.put("1979-05-04", "-12.0");
+
+//		expectedStandardTemperature.put("1979-05-01", "-15.0");
+//		expectedStandardTemperature.put("1979-05-02", "-18.0");
+//		expectedStandardTemperature.put("1979-05-03", "-13.0");
+//		expectedStandardTemperature.put("1979-05-04", "-12.0");
 
 		HaliasDataProcessor haliasConverter = new HaliasDataProcessor();
 
