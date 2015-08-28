@@ -51,8 +51,8 @@ print 'Using RDFLib version: ' + repr(distutils.version.StrictVersion(rdflib.__v
 print 'Halias observation generator. Use -h for help.'
 print '-- Starting observation generation (' + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + ') --'
 
-INPUT_FILE_DIRECTORY = '/common/home/mkoho/HALIAS/InputFiles/'
-OUTPUT_FILE_DIRECTORY = '/common/home/mkoho/HALIAS/PythonOutput/'
+INPUT_FILE_DIRECTORY = '../data/InputFiles/'
+OUTPUT_FILE_DIRECTORY = '../data/PythonOutput/'
 
 #TAXON_INPUT_FILE = INPUT_FILE_DIRECTORY + 'lintuset_HALIAS.ttl'
 TAXON_INPUT_FILE = INPUT_FILE_DIRECTORY + 'avio.ttl'
