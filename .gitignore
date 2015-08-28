@@ -1,3 +1,4 @@
+# Java
 *.class
 *.xml
 *.iml
@@ -16,3 +17,35 @@ jena-log4j.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Python
+*.py[co]
+*.pot
+
+# Packages
+
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+
+# Installer logs
+pip-log.txt
+
+#Dev tools
+.project
+.pydevproject
+.settings/
+*.iml
+.idea
+
+# Backup files
+*~
+
