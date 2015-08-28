@@ -155,11 +155,13 @@ for taxon in taxa:
         types = taxon_ontology.objects(taxon, RDF.type)
         if hh.nsRanks['Species'] in types:
             abbreviations = taxon_ontology.objects(taxon, hh.nsHaliasSchema["abbreviation"])
+            cnt = 0
             for abb in abbreviations:
-                if species_counts[str(abb)] > 300:
-                    taxon_ontology.add((taxon, hh.nsHaliasSchema["rarity"], hh.nsHaliasSchema["common"]))
-                else:
-                    taxon_ontology.add((taxon, hh.nsHaliasSchema["rarity"], hh.nsHaliasSchema["rare"]))
+                cnt += species_counts[str(abb)]
+            if cnt > 300:
+                taxon_ontology.add((taxon, hh.nsHaliasSchema["rarity"], hh.nsHaliasSchema["common"]))
+            else:
+                taxon_ontology.add((taxon, hh.nsHaliasSchema["rarity"], hh.nsHaliasSchema["rare"]))
 
 if not DRYRUN:
     taxon_ontology.serialize(format="turtle", destination=OUTPUT_FILE_DIRECTORY + "halias_taxa_v2.ttl")
