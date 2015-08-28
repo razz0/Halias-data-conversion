@@ -222,7 +222,7 @@ for row in csvReader:
             day = "0" + day
 
         dateStr2 = year + "-" + month + "-" + day
-        uri = "H" + year + month + day + taxon
+        uri = "H" + year + month + day + taxon.replace(' ', '_')
 
         if uri in used_uris:
             # Handle the problem that there are double species + date combinations in original data.
