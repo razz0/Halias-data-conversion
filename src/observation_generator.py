@@ -1,9 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
 Halias observation data converter. Generates interphase RDF files to be processed with an additional Java converter.  
 
-        Copyright (c) 2014 Mikko Koho
+        Copyright (c) 2015 Mikko Koho
 
         Licensed under the MIT License (MIT).
 
